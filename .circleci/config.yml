@@ -4,9 +4,9 @@ jobs:
   build:
     docker:
       - image: cimg/base:2021.07
-      steps:
-        - checkout
-        -run: echo "Hi there!"
+    steps:
+      - checkout
+      - run: echo "Hi there!"
 workflows:
   # Name the workflow "welcome"
   welcome:
