@@ -6,7 +6,8 @@ jobs:
       - image: flyway/flyway:latest
       - image: circleci/postgres:13.4
         environment:
-          POSTGRES_DB: circle_test
+          POSTGRES_USER: circle
+          POSTGRES_DB: test_db
     steps:
       - checkout
       - run:
