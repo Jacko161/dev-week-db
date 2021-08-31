@@ -3,7 +3,7 @@ version: 2.1
 jobs:
   build:
     docker:
-      - image: cimg/base:2021.07
+      - image: flyway/flyway:latest
     steps:
       - checkout
       - run: echo "Hi there!"
