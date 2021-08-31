@@ -4,14 +4,14 @@ jobs:
   build:
     docker:
       - image: flyway/flyway:latest
-      - image: postgres:13.4
+      - image: circleci/postgres:13.4
     steps:
       - checkout
       - run:
           name: install dockerize
           command: curl -O https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz && tar -C /usr/local/bin -xzvf dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz && rm dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
           environment:
-            DOCKERIZE_VERSION: v0.3.0
+            DOCKERIZE_VERSION: v0.6.1
       - run:
           name: Wait for db
           command: dockerize -wait tcp://localhost:5432 -timeout 1m
