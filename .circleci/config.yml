@@ -5,6 +5,8 @@ jobs:
     docker:
       - image: flyway/flyway:latest
       - image: circleci/postgres:13.4
+        environment:
+          POSTGRES_DB: circle_test
     steps:
       - checkout
       - run:
