@@ -89,9 +89,7 @@ jobs:
           command: flyway -community -locations="filesystem:./sql" -url=jdbc:postgresql://$POSTGRES_IP:5432/dev_week -password=$POSTGRES_PASSWORD -user=$POSTGRES_USER migrate
       - run:
           name: Output db info
-          command: |
-            DEPLOY_OUTPUT="$(flyway -community -locations=\"filesystem:./sql\" -url=jdbc:postgresql://$POSTGRES_IP:5432/dev_week -password=$POSTGRES_PASSWORD -user=$POSTGRES_USER info 2>&1)"
-            echo "export DEPLOYMENT_OUTPUT=$DEPLOY_OUTPUT" >> $BASH_ENV
+          command: flyway -community -locations=\"filesystem:./sql\" -url=jdbc:postgresql://$POSTGRES_IP:5432/dev_week -password=$POSTGRES_PASSWORD -user=$POSTGRES_USER info
       - run:
           name: Extract Email Address of committer
           command: |
