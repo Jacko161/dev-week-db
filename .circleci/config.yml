@@ -89,7 +89,7 @@ jobs:
           command: flyway -community -locations="filesystem:./sql" -url=jdbc:postgresql://$POSTGRES_IP:5432/dev_week -password=$POSTGRES_PASSWORD -user=$POSTGRES_USER migrate
       - run:
           name: Output db info
-          command: flyway -community -locations=\"filesystem:./sql\" -url=jdbc:postgresql://$POSTGRES_IP:5432/dev_week -password=$POSTGRES_PASSWORD -user=$POSTGRES_USER info
+          command: flyway -community -locations="filesystem:./sql" -url=jdbc:postgresql://$POSTGRES_IP:5432/dev_week -password=$POSTGRES_PASSWORD -user=$POSTGRES_USER info
       - run:
           name: Extract Email Address of committer
           command: |
