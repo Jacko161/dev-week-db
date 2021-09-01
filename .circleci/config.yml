@@ -11,7 +11,11 @@ jobs:
           POSTGRES_HOST_AUTH_METHOD: trust
     steps:
       - checkout
-      - run: docker run --rm flyway/flyway -url=jdbc:postgresql://localhost/test -user=circle info
+      - run: info
+         environment:
+            user: circle
+            url: jdbc:postgresql://localhost/test
+
 
 workflows:
   # Name the workflow "welcome"
