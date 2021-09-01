@@ -57,7 +57,7 @@ jobs:
           channel: '$SLACK_USER_ID'
           template: basic_on_hold_1
 
-   slack_branch:
+  slack_branch:
        docker:
          - image: cimg/base:2021.07
        steps:
