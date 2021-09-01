@@ -4,6 +4,8 @@ jobs:
   build:
     docker:
       - image: cimg/base:2021.07
+        working_directory: ~/repo
+
       - image: circleci/postgres:13.4
         environment:
           POSTGRES_USER: circle
