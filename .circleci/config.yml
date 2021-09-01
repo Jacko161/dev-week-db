@@ -81,7 +81,9 @@ jobs:
 workflows:
   deploy_psql:
     jobs:
-      - migrate_local
+      - migrate_local:
+        context:
+          - slack-secrets
       - hold:
           type: approval
           requires:
@@ -91,3 +93,4 @@ workflows:
             - hold
           context:
             - ic-secrets
+            - slack-secrets
