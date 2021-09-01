@@ -82,6 +82,16 @@ jobs:
     steps:
       - checkout
       - run:
+          name: Extract Email Address of committer
+          command: |
+            COMMIT_EMAIL=$(git --no-pager log -1 -s --format="%ae")
+            echo "export COMMIT_EMAIL=$COMMIT_EMAIL" >> $BASH_ENV
+      - run:
+          name: Get Slack User ID
+          command: |
+            SLACK_USER_ID=$(curl -H "Authorization: Bearer $SLACK_ACCESS_TOKEN" -d "email=$COMMIT_EMAIL" https://slack.com/api/users.lookupByEmail | jq '.user.id')
+            echo "export SLACK_USER_ID=$SLACK_USER_ID" >> $BASH_ENV
+      - run:
           name: Download Flyway
           command: wget -qO- https://repo1.maven.org/maven2/org/flywaydb/flyway-commandline/7.14.0/flyway-commandline-7.14.0-linux-x64.tar.gz | tar xvz && sudo ln -s `pwd`/flyway-7.14.0/flyway /usr/local/bin
       - run:
@@ -95,16 +105,6 @@ jobs:
             DATABASE_NAME=$(echo $INFO | jq '.database')
             echo "export SCHEMA_VERSION=$SCHEMA_VERSION" >> $BASH_ENV
             echo "export DATABASE_NAME=$DATABASE_NAME" >> $BASH_ENV
-      - run:
-          name: Extract Email Address of committer
-          command: |
-            COMMIT_EMAIL=$(git --no-pager log -1 -s --format="%ae")
-            echo "export COMMIT_EMAIL=$COMMIT_EMAIL" >> $BASH_ENV
-      - run:
-          name: Get Slack User ID
-          command: |
-            SLACK_USER_ID=$(curl -H "Authorization: Bearer $SLACK_ACCESS_TOKEN" -d "email=$COMMIT_EMAIL" https://slack.com/api/users.lookupByEmail | jq '.user.id')
-            echo "export SLACK_USER_ID=$SLACK_USER_ID" >> $BASH_ENV
       - slack/notify:
           event: fail
           channel: '$SLACK_USER_ID'
