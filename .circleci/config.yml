@@ -90,9 +90,11 @@ jobs:
       - run:
           name: Output db info
           command: |
-            SCHEMA_VERSION=$(flyway -community -locations="filesystem:./sql" -url=jdbc:postgresql://$POSTGRES_IP:5432/dev_week -password=$POSTGRES_PASSWORD -user=$POSTGRES_USER -outputType=json info | jq '.schemaVersion')
+            INFO=$(flyway -community -locations="filesystem:./sql" -url=jdbc:postgresql://$POSTGRES_IP:5432/dev_week -password=$POSTGRES_PASSWORD -user=$POSTGRES_USER -outputType=json info)
+            SCHEMA_VERSION=$(echo $INFO | jq '.schemaVersion')
+            DATABASE_NAME=$(echo $INFO | jq '.database')
             echo "export SCHEMA_VERSION=$SCHEMA_VERSION" >> $BASH_ENV
-
+            echo "export DATABASE_NAME=$DATABASE_NAME" >> $BASH_ENV
       - run:
           name: Extract Email Address of committer
           command: |
