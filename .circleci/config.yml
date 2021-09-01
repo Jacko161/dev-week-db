@@ -94,3 +94,6 @@ workflows:
           context:
             - ic-secrets
             - slack-secrets
+          filters:
+            branches:
+              only: main
