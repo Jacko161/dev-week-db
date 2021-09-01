@@ -94,12 +94,12 @@ workflows:
           type: approval
           requires:
             - migrate_local
-      - deploy:
-          requires:
-            - hold
           filters:
             branches:
               only: main
+      - deploy:
+          requires:
+            - hold
           context:
             - ic-secrets
             - slack-secrets
