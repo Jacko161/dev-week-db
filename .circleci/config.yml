@@ -7,18 +7,12 @@ jobs:
       - image: circleci/postgres:13.4
         environment:
           POSTGRES_USER: circle
-          POSTGRES_DB: test_db
+          POSTGRES_DB: test
           POSTGRES_HOST_AUTH_METHOD: trust
     steps:
       - checkout
-      - run:
-          name: install dockerize
-          command: curl -LO https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz && tar -C /usr/local/bin -xzvf dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz && rm dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
-          environment:
-            DOCKERIZE_VERSION: v0.6.1
-      - run:
-          name: Wait for db
-          command: dockerize -wait tcp://localhost:5432 -timeout 1m
+      - run: docker run --rm flyway/flyway -url=jdbc:postgresql://localhost/test -user=circle info
+
 workflows:
   # Name the workflow "welcome"
   welcome:
