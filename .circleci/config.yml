@@ -15,8 +15,12 @@ jobs:
           name: Download Flyway
           command: wget -qO- https://repo1.maven.org/maven2/org/flywaydb/flyway-commandline/7.14.0/flyway-commandline-7.14.0-linux-x64.tar.gz | tar xvz && sudo ln -s `pwd`/flyway-7.14.0/flyway /usr/local/bin
       - run:
-          name: Test Connection to DB
+          name: Migrate
+          command: flyway -community -url=jdbc:postgresql://localhost:5432/test -user=circle migrate
+      - run:
+          name: Output db info
           command: flyway -community -url=jdbc:postgresql://localhost:5432/test -user=circle info
+
 
 
 workflows:
