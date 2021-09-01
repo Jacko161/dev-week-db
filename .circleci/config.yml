@@ -126,13 +126,13 @@ workflows:
           branches:
             only:
               - main
-        - slack_branch:
-          context:
-            - slack_secrets
-          filters:
-            branches:
-              ignore:
-                - main
+      - slack_branch:
+        context:
+          - slack_secrets
+        filters:
+          branches:
+            ignore:
+              - main
       - hold:
           type: approval
           requires:
