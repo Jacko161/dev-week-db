@@ -113,21 +113,21 @@ workflows:
          context:
            - slack-secrets
       - slack_hold:
-        context:
-          - slack_secrets
-        requires:
-          - migrate_local
-        filters:
-          branches:
-            only: main
+          context:
+            - slack_secrets
+          requires:
+            - migrate_local
+          filters:
+            branches:
+              only: main
       - slack_branch:
-        context:
-          - slack_secrets
-        requires:
-          - migrate_local
-        filters:
-          branches:
-            ignore: main
+          context:
+            - slack_secrets
+          requires:
+            - migrate_local
+          filters:
+            branches:
+              ignore: main
       - hold:
           type: approval
           requires:
