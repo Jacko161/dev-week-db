@@ -89,7 +89,10 @@ jobs:
           command: flyway -community -locations="filesystem:./sql" -url=jdbc:postgresql://$POSTGRES_IP:5432/dev_week -password=$POSTGRES_PASSWORD -user=$POSTGRES_USER migrate
       - run:
           name: Output db info
-          command: flyway -community -locations="filesystem:./sql" -url=jdbc:postgresql://$POSTGRES_IP:5432/dev_week -password=$POSTGRES_PASSWORD -user=$POSTGRES_USER info
+          command: |
+            SCHEMA_VERSION=$(flyway -community -locations="filesystem:./sql" -url=jdbc:postgresql://$POSTGRES_IP:5432/dev_week -password=$POSTGRES_PASSWORD -user=$POSTGRES_USER -outputType=json info | jq '.schemaVersion')
+            echo "export SCHEMA_VERSION=$SCHEMA_VERSION" >> $BASH_ENV
+
       - run:
           name: Extract Email Address of committer
           command: |
