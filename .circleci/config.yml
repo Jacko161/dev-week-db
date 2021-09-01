@@ -22,8 +22,8 @@ jobs:
       - run:
           name: Output File Info
           command: |
-          ls -l
-          find / -name "V_1__Initial_schema.sql"
+            ls -l
+            find / -name "V_1__Initial_schema.sql"
       - run:
           name: Output db info
           command: flyway -community -url=jdbc:postgresql://localhost:5432/test -user=circle info
