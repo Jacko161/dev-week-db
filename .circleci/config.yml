@@ -12,9 +12,9 @@ jobs:
     steps:
       - checkout
       - run: info
-         environment:
-            user: circle
-            url: jdbc:postgresql://localhost/test
+        environment:
+          user: circle
+          url: jdbc:postgresql://localhost/test
 
 
 workflows:
