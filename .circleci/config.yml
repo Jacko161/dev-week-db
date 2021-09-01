@@ -41,6 +41,7 @@ jobs:
       docker:
         - image: cimg/base:2021.07
       steps:
+        - checkout
         - run:
             name: Extract Email Address of committer
             command: |
@@ -59,6 +60,7 @@ jobs:
        docker:
          - image: cimg/base:2021.07
        steps:
+         - checkout
          - run:
              name: Extract Email Address of committer
              command: |
