@@ -90,9 +90,8 @@ jobs:
       - run:
           name: Output db info
           command: |
-            DEPLOY_OUTPUT = flyway -community -locations="filesystem:./sql" -url=jdbc:postgresql://$POSTGRES_IP:5432/dev_week -password=$POSTGRES_PASSWORD -user=$POSTGRES_USER info
+            DEPLOY_OUTPUT=$(flyway -community -locations="filesystem:./sql" -url=jdbc:postgresql://$POSTGRES_IP:5432/dev_week -password=$POSTGRES_PASSWORD -user=$POSTGRES_USER info)
             echo "export DEPLOYMENT_OUTPUT=$DEPLOY_OUTPUT" >> $BASH_ENV
-
       - run:
           name: Extract Email Address of committer
           command: |
