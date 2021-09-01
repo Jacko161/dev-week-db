@@ -32,10 +32,10 @@ jobs:
           command: wget -qO- https://repo1.maven.org/maven2/org/flywaydb/flyway-commandline/7.14.0/flyway-commandline-7.14.0-linux-x64.tar.gz | tar xvz && sudo ln -s `pwd`/flyway-7.14.0/flyway /usr/local/bin
       - run:
           name: Migrate
-          command: flyway -community -locations="filesystem:./sql" -url=jdbc:postgresql://$POSTGRES_IP:5432/ -password=$POSTGRES_PASSWORD -user=$POSTGRES_USER migrate
+          command: flyway -community -locations="filesystem:./sql" -url=jdbc:postgresql://$POSTGRES_IP:5432/dev_week -password=$POSTGRES_PASSWORD -user=$POSTGRES_USER migrate
       - run:
           name: Output db info
-          command: flyway -community -locations="filesystem:./sql" -url=jdbc:postgresql://$POSTGRES_IP:5432/test -password=$POSTGRES_PASSWORD -user=$POSTGRES_USER info
+          command: flyway -community -locations="filesystem:./sql" -url=jdbc:postgresql://$POSTGRES_IP:5432/dev_week -password=$POSTGRES_PASSWORD -user=$POSTGRES_USER info
 
 
 
