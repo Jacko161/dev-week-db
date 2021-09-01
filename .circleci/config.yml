@@ -49,5 +49,7 @@ workflows:
           requires:
             - migrate_local
       - deploy:
+          requires:
+            - hold
           context:
             - ic-secrets
