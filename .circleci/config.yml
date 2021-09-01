@@ -3,7 +3,7 @@ version: 2.1
 jobs:
   build:
     docker:
-      - image: flyway/flyway:latest
+      - image: cimg/base:2021.07
       - image: circleci/postgres:13.4
         environment:
           POSTGRES_USER: circle
@@ -11,10 +11,12 @@ jobs:
           POSTGRES_HOST_AUTH_METHOD: trust
     steps:
       - checkout
-      - run: info
-        environment:
-          user: circle
-          url: jdbc:postgresql://localhost/test
+      - run:
+          name: Download Flyway
+          command: wget -qO- https://repo1.maven.org/maven2/org/flywaydb/flyway-commandline/7.14.0/flyway-commandline-7.14.0-linux-x64.tar.gz | tar xvz && sudo ln -s `pwd`/flyway-7.14.0/flyway /usr/local/bin
+      - run:
+          name: Test Connection to DB
+          command: flyway -community -user=circle info
 
 
 workflows:
