@@ -41,11 +41,9 @@ jobs:
 
 
 workflows:
-  # Name the workflow "welcome"
-  welcome:
-    # Run the welcome/run job in its own container
+  deploy_psql:
     jobs:
-      - migrate_local:
+      - migrate_local
       - hold:
           type: approval
           requires:
