@@ -56,25 +56,6 @@ jobs:
             event: pass
             channel: '$SLACK_USER_ID'
             template: basic_on_hold_1
-  slack_branch:
-       docker:
-         - image: cimg/base:2021.07
-       steps:
-         - checkout
-         - run:
-             name: Extract Email Address of committer
-             command: |
-               COMMIT_EMAIL=$(git --no-pager log -1 -s --format="%ae")
-               echo "export COMMIT_EMAIL=$COMMIT_EMAIL" >> $BASH_ENV
-         - run:
-             name: Get Slack User ID
-             command: |
-               SLACK_USER_ID=$(curl -H "Authorization: Bearer $SLACK_ACCESS_TOKEN" -d "email=$COMMIT_EMAIL" https://slack.com/api/users.lookupByEmail | jq '.user.id')
-               echo "export SLACK_USER_ID=$SLACK_USER_ID" >> $BASH_ENV
-         - slack/notify:
-             event: pass
-             channel: '$SLACK_USER_ID'
-             template: basic_success_1
   deploy:
     docker:
       - image: cimg/base:2021.07
@@ -127,14 +108,6 @@ workflows:
           filters:
             branches:
               only: main
-      - slack_branch:
-          context:
-            - slack-secrets
-          requires:
-            - migrate_local
-          filters:
-            branches:
-              ignore: main
       - hold:
           type: approval
           requires:
