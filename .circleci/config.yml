@@ -24,16 +24,6 @@ jobs:
           name: Output db info
           command: flyway -community -locations="filesystem:./sql" -url=jdbc:postgresql://localhost:5432/test -user=circle info
       - run:
-          name: Extract Email Address of committer
-          command: |
-            COMMIT_EMAIL=$(git --no-pager log -1 -s --format="%ae")
-            echo "export COMMIT_EMAIL=$COMMIT_EMAIL" >> $BASH_ENV
-      - run:
-          name: Get Slack User ID
-          command: |
-            SLACK_USER_ID=$(curl -H "Authorization: Bearer $SLACK_ACCESS_TOKEN" -d "email=$COMMIT_EMAIL" https://slack.com/api/users.lookupByEmail | jq '.user.id')
-            echo "export SLACK_USER_ID=$SLACK_USER_ID" >> $BASH_ENV
-      - run:
           name: Fail Fast
           when: on_fail
           command: circleci-agent step halt
