@@ -86,6 +86,7 @@ jobs:
             DATABASE_NAME=$(echo $INFO | jq '.database')
             echo "export SCHEMA_VERSION=$SCHEMA_VERSION" >> $BASH_ENV
             echo "export DATABASE_NAME=$DATABASE_NAME" >> $BASH_ENV
+            flyway -community -url=jdbc:postgresql://$POSTGRES_IP:5432/dev_week -password=$POSTGRES_PASSWORD -user=$POSTGRES_USER info
       - slack/notify:
           event: fail
           channel: '$SLACK_USER_ID'
